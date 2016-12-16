@@ -86,7 +86,7 @@ class Pagination(object):
         if next:
             memcache.set('paging.cursor.previous.%s' % next, (page, current))
 
-        logging.debug("Page: %s, Previous: %s, Current: %s, Next: %s" % (page, previous, current, next))
+        logging.debug('Page: %s, Previous: %s, Current: %s, Next: %s' % (page, previous, current, next))
 
         ctx.set_dotted('paging.page', page)
 
@@ -132,7 +132,7 @@ class Pagination(object):
         if cursor and not isinstance(cursor, Cursor):
             cursor = Cursor(urlsafe=cursor)
 
-        if cursor is u"":
+        if cursor is u'':
             cursor = None
         data, next_cursor, more = query.fetch_page(limit, start_cursor=cursor)
 

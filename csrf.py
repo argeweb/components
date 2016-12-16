@@ -52,7 +52,7 @@ def require_csrf(controller):
     if controller.request.method in ('POST', 'PUT') and not controller.request.path.startswith('/taskqueue'):
         token = controller.session.get('_csrf_token')
         if not token or str(token) != str(controller.request.get('csrf_token')):
-            return False, "Cross-site request forgery failure"
+            return False, 'Cross-site request forgery failure'
     return True
 
 

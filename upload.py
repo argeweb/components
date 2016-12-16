@@ -81,8 +81,8 @@ class Upload(object):
             files = uploads.get(field.name)
             if files and files[0]:
                 getattr(form, field.name).data = files[0].key()
-                if hasattr(form, "%s_cloud_storage" % field.name):
-                    getattr(form, "%s_cloud_storage" % field.name).data = files[0].cloud_storage.gs_object_name
+                if hasattr(form, '%s_cloud_storage' % field.name):
+                    getattr(form, '%s_cloud_storage' % field.name).data = files[0].cloud_storage.gs_object_name
             #else:
             #    delattr(form, field.name)
 
