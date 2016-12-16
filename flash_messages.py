@@ -19,7 +19,7 @@ class FlashMessages(object):
         import time
         if isinstance(flash, list):
             flash = {}
-        flash[time.time()] = {"message": message, "level": level}
+        flash[time.time()] = {'message': message, 'level': level}
         self.controller.session['__flash'] = flash
 
     def messages(self, clear=True):
