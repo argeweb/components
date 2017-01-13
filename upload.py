@@ -56,8 +56,9 @@ class Upload(object):
         great for rest apis.
         """
         if self.process_uploads:
-            if not 'upload_url' in controller.context:
-                controller.context.set(upload_url=self.generate_upload_url())
+            if 'upload_url' not in controller.context:
+                controller.context.set(upload_url=Upload.generate_upload_url(
+                    uri=controller.request.uri, cloud_storage_bucket=self.cloud_storage_bucket))
                 if hasattr(controller, 'scaffold'):
                     controller.scaffold.form_action = controller.context['upload_url']
                     controller.scaffold.form_encoding = 'multipart/form-data'
@@ -86,12 +87,14 @@ class Upload(object):
             #else:
             #    delattr(form, field.name)
 
-    def generate_upload_url(self, uri=None):
-        url = urllib2.unquote(uri if uri else self.controller.request.uri)
+    @staticmethod
+    def generate_upload_url(url=None, uri=None, cloud_storage_bucket=''):
+        if url is None:
+            url = urllib2.unquote(uri)
 
         return blobstore.create_upload_url(
             success_path=url,
-            gs_bucket_name=self.cloud_storage_bucket)
+            gs_bucket_name=cloud_storage_bucket)
 
     def serve(self, item, property):
         if not item:
