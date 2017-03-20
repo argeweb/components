@@ -1,0 +1,13 @@
+{
+  "name": "components",
+  "homepage": "https://github.com/argeweb/components",
+  "_release": "e186e8ac32",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "e186e8ac320edd79a150fad36d79425cbed3373a"
+  },
+  "_source": "https://github.com/argeweb/components.git",
+  "_target": "*",
+  "_originalSource": "argeweb/components"
+}

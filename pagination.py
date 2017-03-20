@@ -61,7 +61,7 @@ class Pagination(object):
         which cursor and the number of objects the user is requesting.
         """
         if not limit:
-            limit = self.controller.meta.pagination_limit if hasattr(self.controller.meta, 'pagination_limit') else 25
+            limit = self.controller.meta.pagination_limit if hasattr(self.controller.meta, 'pagination_limit') else 50
         if not cursor:
             cursor = self.controller.request.params.get('cursor', None)
             if cursor == 'False':
