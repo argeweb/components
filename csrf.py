@@ -1,5 +1,4 @@
 import uuid
-from argeweb.core.controller import add_authorizations
 
 
 class CSRF(object):
@@ -60,4 +59,5 @@ def csrf_protect(f):
     """
     Shortcut decorator to easily add the CSRF check to an action
     """
+    from argeweb.core.controller import add_authorizations
     return add_authorizations(require_csrf)(f)
