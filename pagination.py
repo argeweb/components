@@ -86,7 +86,7 @@ class Pagination(object):
         if next:
             memcache.set('paging.cursor.previous.%s' % next, (page, current))
 
-        logging.debug('Page: %s, Previous: %s, Current: %s, Next: %s' % (page, previous, current, next))
+        # logging.debug('Page: %s, Previous: %s, Current: %s, Next: %s' % (page, previous, current, next))
 
         ctx.set_dotted('paging.page', page)
 
@@ -126,7 +126,7 @@ class Pagination(object):
         query = self._get_query(query)
 
         if not query:
-            logging.debug('Couldn\'t auto paginate, no valid query found')
+            # logging.debug('Couldn\'t auto paginate, no valid query found')
             return
 
         if cursor and not isinstance(cursor, Cursor):
@@ -138,8 +138,6 @@ class Pagination(object):
 
         if hasattr(self.controller, 'scaffold'):
             self.controller.context[self.controller.scaffold.plural] = data
-        else:
-            logging.debug('Could not set data')
 
         self.set_pagination_info(
             current_cursor=cursor.urlsafe() if cursor else False,

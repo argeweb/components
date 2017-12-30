@@ -20,7 +20,14 @@ class Search(object):
             return 'auto_ix_%s' % Model._get_kind()
         raise ValueError('No search index could be determined')
 
-    def search(self, index=None, query=None, limit=None, cursor=None, sort_field=None, sort_direction='asc', sort_default_value=None, options=None):
+    def _converter_language(self, query_string):
+        if hasattr(self.controller.meta, 'Model'):
+            Model = self.controller.meta.Model
+            for filed_name, f in Model._properties.items():
+                query_string = query_string.replace(f._verbose_name, filed_name)
+        return query_string
+
+    def search(self, index=None, query=None, limit=None, cursor=None, sort_field=None, sort_direction='asc', sort_default_value=None, options=None, return_all=False):
         """
         Searches using the provided index (or an automatically determine one).
 
@@ -33,6 +40,7 @@ class Search(object):
 
         index = index if index else self._get_index()
         query_string = query if query else self.controller.request.params.get('query', '')
+        query_string = self._converter_language(query_string)
         options = options if options else {}
         search_function = self.controller.meta.search_function if hasattr(self.controller.meta, 'search_function') else argeweb_search.search
 
@@ -64,7 +72,13 @@ class Search(object):
 
         if hasattr(self.controller, 'scaffold'):
             self.controller.context[self.controller.scaffold.plural] = results
-
+        if return_all:
+            return {
+                'search_error': error,
+                'search_query': query_string,
+                'search_results': results,
+                'paging': self.controller.context['paging'],
+            }
         return results
 
     __call__ = search
