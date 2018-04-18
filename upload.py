@@ -1,10 +1,9 @@
-import urllib2
 import cgi
 
 from google.appengine.ext import blobstore
 from google.appengine.api import app_identity
 
-from argeweb.libs import wtforms
+from argeweb.core.forms import wtforms
 from argeweb.core import settings
 
 
@@ -90,6 +89,7 @@ class Upload(object):
     @staticmethod
     def generate_upload_url(url=None, uri=None, cloud_storage_bucket=''):
         if url is None:
+            import urllib2
             url = urllib2.unquote(uri)
 
         return blobstore.create_upload_url(
